@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caviana Carga</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2446a9;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #1f33a1;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e8f5e9;
+        }
+
+        h2 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CAVIANA CARGA</h1>
+</header>
+
+<div class="container">
+    <h2>Pallets por Item</h2>
+    <table id="palletsTable">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Pallets</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de la primera tabla se generan aquí -->
+        </tbody>
+    </table>
+
+    <h2>Peso por Pallet</h2>
+    <table id="pesoTable">
+        <thead>
+            <tr>
+                <th>Pallet</th>
+                <th>Peso (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de la segunda tabla se generan aquí -->
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2024 Caviana Carga. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+    // JSON incrustado para la tabla de "Pallets por Item"
+    const palletsData = [
+    {
+        "item": "ITEM 1",
+        "pallets": "Pallet 38"
+    },
+    {
+        "item": "ITEM 2",
+        "pallets": "Pallet 15"
+    },
+    {
+        "item": "ITEM 3",
+        "pallets": "Pallet 14"
+    },
+    {
+        "item": "ITEM 4",
+        "pallets": "Pallet 13"
+    },
+    {
+        "item": "ITEM 5",
+        "pallets": "Pallet 35"
+    },
+    {
+        "item": "ITEM 6",
+        "pallets": "Pallet 12"
+    },
+    {
+        "item": "ITEM 7",
+        "pallets": "Pallet 45"
+    },
+    {
+        "item": "ITEM 8",
+        "pallets": "Pallet 44"
+    },
+    {
+        "item": "ITEM 9",
+        "pallets": "Pallet 27"
+    },
+    {
+        "item": "ITEM 10",
+        "pallets": "Pallet 23"
+    },
+    {
+        "item": "ITEM 11",
+        "pallets": "Pallet 37"
+    },
+    {
+        "item": "ITEM 12",
+        "pallets": "Pallet 46"
+    },
+    {
+        "item": "ITEM 13",
+        "pallets": "Pallet 39"
+    },
+    {
+        "item": "ITEM 14",
+        "pallets": "Pallet 17"
+    },
+    {
+        "item": "ITEM 15",
+        "pallets": "Pallet 31"
+    },
+    {
+        "item": "ITEM 16",
+        "pallets": "Pallet 11"
+    },
+    {
+        "item": "ITEM 17",
+        "pallets": "Pallet 8"
+    },
+    {
+        "item": "ITEM 18",
+        "pallets": "Pallet 36"
+    },
+    {
+        "item": "ITEM 19",
+        "pallets": "Pallet 9"
+    },
+    {
+        "item": "ITEM 20",
+        "pallets": "Pallet 10"
+    },
+    {
+        "item": "ITEM 21",
+        "pallets": "Pallet 25"
+    },
+    {
+        "item": "ITEM 22",
+        "pallets": "Pallet 7"
+    },
+    {
+        "item": "ITEM 23",
+        "pallets": "Pallet 19"
+    },
+    {
+        "item": "ITEM 24",
+        "pallets": "Pallet 20"
+    },
+    {
+        "item": "ITEM 25",
+        "pallets": "Pallet 16"
+    },
+    {
+        "item": "ITEM 26",
+        "pallets": "Pallet 41"
+    },
+    {
+        "item": "ITEM 27",
+        "pallets": "Pallet 28"
+    },
+    {
+        "item": "ITEM 28",
+        "pallets": "Pallet 26"
+    },
+    {
+        "item": "ITEM 29",
+        "pallets": "Pallet 48"
+    },
+    {
+        "item": "ITEM 30",
+        "pallets": "Pallet 24"
+    },
+    {
+        "item": "ITEM 31",
+        "pallets": "Pallet 21"
+    },
+    {
+        "item": "ITEM 32",
+        "pallets": "Pallet 43"
+    },
+    {
+        "item": "ITEM 33",
+        "pallets": "Pallet 6"
+    },
+    {
+        "item": "ITEM 34",
+        "pallets": "Pallet 5"
+    },
+    {
+        "item": "ITEM 35",
+        "pallets": "Pallet 32"
+    },
+    {
+        "item": "ITEM 36",
+        "pallets": "Pallet 3"
+    },
+    {
+        "item": "ITEM 37",
+        "pallets": "Pallet 3"
+    },
+    {
+        "item": "ITEM 38",
+        "pallets": "Pallet 32"
+    },
+    {
+        "item": "ITEM 39",
+        "pallets": "Pallet 43"
+    },
+    {
+        "item": "ITEM 40",
+        "pallets": "Pallet 26"
+    },
+    {
+        "item": "ITEM 41",
+        "pallets": "Pallet 24"
+    },
+    {
+        "item": "ITEM 42",
+        "pallets": "Pallet 22"
+    },
+    {
+        "item": "ITEM 43",
+        "pallets": "Pallet 21"
+    },
+    {
+        "item": "ITEM 44",
+        "pallets": "Pallet 41"
+    },
+    {
+        "item": "ITEM 45",
+        "pallets": "Pallet 47"
+    },
+    {
+        "item": "ITEM 46",
+        "pallets": "Pallet 19"
+    },
+    {
+        "item": "ITEM 47",
+        "pallets": "Pallet 18"
+    },
+    {
+        "item": "ITEM 48",
+        "pallets": "Pallet 16"
+    },
+    {
+        "item": "ITEM 49",
+        "pallets": "Pallet 10"
+    },
+    {
+        "item": "ITEM 50",
+        "pallets": "Pallet 36"
+    },
+    {
+        "item": "ITEM 51",
+        "pallets": "Pallet 9"
+    },
+    {
+        "item": "ITEM 52",
+        "pallets": "Pallet 29"
+    },
+    {
+        "item": "ITEM 53",
+        "pallets": "Pallet 8"
+    },
+    {
+        "item": "ITEM 54",
+        "pallets": "Pallet 2"
+    },
+    {
+        "item": "ITEM 55",
+        "pallets": "Pallet 1"
+    },
+    {
+        "item": "ITEM 56",
+        "pallets": "Pallet 31"
+    },
+    {
+        "item": "ITEM 57",
+        "pallets": "Pallet 1"
+    },
+    {
+        "item": "ITEM 58",
+        "pallets": "Pallet 17"
+    },
+    {
+        "item": "ITEM 59",
+        "pallets": "Pallet 23"
+    },
+    {
+        "item": "ITEM 60",
+        "pallets": "Pallet 11"
+    },
+    {
+        "item": "ITEM 61",
+        "pallets": "Pallet 44"
+    },
+    {
+        "item": "ITEM 62",
+        "pallets": "Pallet 35"
+    },
+    {
+        "item": "ITEM 63",
+        "pallets": "Pallet 45"
+    },
+    {
+        "item": "ITEM 64",
+        "pallets": "Pallet 30"
+    },
+    {
+        "item": "ITEM 65",
+        "pallets": "Pallet 40"
+    },
+    {
+        "item": "ITEM 66",
+        "pallets": "Pallet 13"
+    },
+    {
+        "item": "ITEM 67",
+        "pallets": "Pallet 4"
+    },
+    {
+        "item": "ITEM 68",
+        "pallets": "Pallet 42"
+    },
+    {
+        "item": "ITEM 69",
+        "pallets": "Pallet 40"
+    },
+    {
+        "item": "ITEM 70",
+        "pallets": "Pallet 33"
+    },
+    {
+        "item": "ITEM 71",
+        "pallets": "Pallet 34"
+    },
+    {
+        "item": "ITEM 72",
+        "pallets": "Pallet 30"
+    },
+    {
+        "item": "ITEM 73",
+        "pallets": "Pallet 4"
+    },
+    {
+        "item": "ITEM 74",
+        "pallets": "Pallet 15"
+    },
+    {
+        "item": "ITEM 75",
+        "pallets": "Pallet 14"
+    },
+    {
+        "item": "ITEM 76",
+        "pallets": "Pallet 33"
+    },
+    {
+        "item": "ITEM 77",
+        "pallets": "Pallet 2"
+    },
+    {
+        "item": "ITEM 78",
+        "pallets": "Pallet 22"
+    },
+    {
+        "item": "ITEM 79",
+        "pallets": "Pallet 38"
+    },
+    {
+        "item": "ITEM 80",
+        "pallets": "Pallet 42"
+    },
+    {
+        "item": "ITEM 81",
+        "pallets": "Pallet 34"
+    },
+    {
+        "item": "ITEM 82",
+        "pallets": "Pallet 18"
+    },
+    {
+        "item": "ITEM 83",
+        "pallets": "Pallet 48"
+    },
+    {
+        "item": "ITEM 84",
+        "pallets": "Pallet 47"
+    },
+    {
+        "item": "ITEM 85",
+        "pallets": "Pallet 28"
+    },
+    {
+        "item": "ITEM 86",
+        "pallets": "Pallet 29"
+    },
+    {
+        "item": "ITEM 87",
+        "pallets": "Pallet 34"
+    },
+    {
+        "item": "ITEM 88",
+        "pallets": "Pallet 20"
+    },
+    {
+        "item": "ITEM 89",
+        "pallets": "Pallet 5"
+    },
+    {
+        "item": "ITEM 90",
+        "pallets": "Pallet 6"
+    },
+    {
+        "item": "ITEM 91",
+        "pallets": "Pallet 42"
+    },
+    {
+        "item": "ITEM 92",
+        "pallets": "Pallet 33"
+    },
+    {
+        "item": "ITEM 93",
+        "pallets": "Pallet 27"
+    },
+    {
+        "item": "ITEM 94",
+        "pallets": "Pallet 25"
+    },
+    {
+        "item": "ITEM 95",
+        "pallets": "Pallet 46"
+    },
+    {
+        "item": "ITEM 96",
+        "pallets": "Pallet 29"
+    },
+    {
+        "item": "ITEM 97",
+        "pallets": "Pallet 30"
+    },
+    {
+        "item": "ITEM 98",
+        "pallets": "Pallet 4"
+    },
+    {
+        "item": "ITEM 99",
+        "pallets": "Pallet 39"
+    },
+    {
+        "item": "ITEM 100",
+        "pallets": "Pallet 7"
+    },
+    {
+        "item": "ITEM 101",
+        "pallets": "Pallet 40"
+    },
+    {
+        "item": "ITEM 102",
+        "pallets": "Pallet 12"
+    },
+    {
+        "item": "ITEM 103",
+        "pallets": "Pallet 47"
+    },
+    {
+        "item": "ITEM 104",
+        "pallets": "Pallet 2"
+    },
+    {
+        "item": "ITEM 105",
+        "pallets": "Pallet 37"
+    },
+    {
+        "item": "ITEM 106",
+        "pallets": "Pallet 7"
+    },
+    {
+        "item": "ITEM 107",
+        "pallets": "Pallet 18"
+    },
+    {
+        "item": "ITEM 108",
+        "pallets": "Pallet 37"
+    },
+    {
+        "item": "ITEM 109",
+        "pallets": "Pallet 6"
+    },
+    {
+        "item": "ITEM 110",
+        "pallets": "Pallet 22"
+    },
+    {
+        "item": "ITEM 111",
+        "pallets": "Pallet 25"
+    },
+    {
+        "item": "ITEM 112",
+        "pallets": "Pallet 39"
+    },
+    {
+        "item": "ITEM 113",
+        "pallets": "Pallet 28"
+    },
+    {
+        "item": "ITEM 114",
+        "pallets": "Pallet 5"
+    },
+    {
+        "item": "ITEM 115",
+        "pallets": "Pallet 48"
+    },
+    {
+        "item": "ITEM 116",
+        "pallets": "Pallet 12"
+    },
+    {
+        "item": "ITEM 117",
+        "pallets": "Pallet 20"
+    },
+    {
+        "item": "ITEM 118",
+        "pallets": "Pallet 46"
+    },
+    {
+        "item": "ITEM 119",
+        "pallets": "Pallet 1"
+    },
+    {
+        "item": "ITEM 120",
+        "pallets": "Pallet 27"
+    }
+];
+
+    const palletsTableBody = document.querySelector('#palletsTable tbody');
+    palletsData.forEach(entry => {
+        const row = document.createElement('tr');
+        const itemCell = document.createElement('td');
+        const palletsCell = document.createElement('td');
+
+        itemCell.textContent = entry.item;
+        palletsCell.textContent = entry.pallets;
+
+        row.appendChild(itemCell);
+        row.appendChild(palletsCell);
+        palletsTableBody.appendChild(row);
+    });
+
+    // JSON incrustado para la tabla de "Peso por Pallet"
+    const pesoData = [
+    {
+        "pallet": "Pallet 1",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 2",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 3",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 4",
+        "peso": 1480
+    },
+    {
+        "pallet": "Pallet 5",
+        "peso": 1470
+    },
+    {
+        "pallet": "Pallet 6",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 7",
+        "peso": 1490
+    },
+    {
+        "pallet": "Pallet 8",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 9",
+        "peso": 1480
+    },
+    {
+        "pallet": "Pallet 10",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 11",
+        "peso": 1460
+    },
+    {
+        "pallet": "Pallet 12",
+        "peso": 1490
+    },
+    {
+        "pallet": "Pallet 13",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 14",
+        "peso": 1490
+    },
+    {
+        "pallet": "Pallet 15",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 16",
+        "peso": 1480
+    },
+    {
+        "pallet": "Pallet 17",
+        "peso": 1490
+    },
+    {
+        "pallet": "Pallet 18",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 19",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 20",
+        "peso": 1480
+    },
+    {
+        "pallet": "Pallet 21",
+        "peso": 1490
+    },
+    {
+        "pallet": "Pallet 22",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 23",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 24",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 25",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 26",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 27",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 28",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 29",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 30",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 31",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 32",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 33",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 34",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 35",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 36",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 37",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 38",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 39",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 40",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 41",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 42",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 43",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 44",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 45",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 46",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 47",
+        "peso": 1500
+    },
+    {
+        "pallet": "Pallet 48",
+        "peso": 1500
+    }
+];
+
+    const pesoTableBody = document.querySelector('#pesoTable tbody');
+    pesoData.forEach(entry => {
+        const row = document.createElement('tr');
+        const palletCell = document.createElement('td');
+        const pesoCell = document.createElement('td');
+
+        palletCell.textContent = entry.pallet;
+        pesoCell.textContent = entry.peso;
+
+        row.appendChild(palletCell);
+        row.appendChild(pesoCell);
+        pesoTableBody.appendChild(row);
+    });
+</script>
+
+</body>
+</html>
